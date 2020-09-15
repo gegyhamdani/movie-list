@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './index.module.css';
 
-const Search = ({ placeholder, onChange, onEnter }) => {
+const Search = ({ placeholder, onChange, onKeyPress }) => {
   return (
     <div className={styles.wrapper}>
       <input
@@ -10,7 +10,7 @@ const Search = ({ placeholder, onChange, onEnter }) => {
         placeholder={placeholder}
         className={styles.searchbox}
         onChange={onChange}
-        onKeyPress={onEnter}
+        onKeyPress={onKeyPress}
       />
     </div>
   );
@@ -19,13 +19,13 @@ const Search = ({ placeholder, onChange, onEnter }) => {
 Search.propTypes = {
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
-  onEnter: PropTypes.func
+  onKeyPress: PropTypes.func
 };
 
 Search.defaultProps = {
   placeholder: '',
   onChange: '',
-  onEnter: ''
+  onKeyPress: ''
 };
 
 export default Search;

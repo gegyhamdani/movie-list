@@ -23,7 +23,7 @@ const App = () => {
     <div className={styles.container}>
       <section className={styles.wrapper}>
         <h1>Movie Database</h1>
-        <Search onChange={handleChangeMovie} onEnter={handleSearchMovie} />
+        <Search onChange={handleChangeMovie} onKeyPress={handleSearchMovie} />
       </section>
     </div>
   );
