@@ -24,7 +24,8 @@ const getInstance = () => {
 };
 
 const routes = {
-  movie: (title, page) => `&s=${title}&page=${page}`,
+  movieList: (title, page) => `&s=${title}&page=${page}`,
+  movieDetail: (id) => `&i=${id}`,
 };
 
 export default {
