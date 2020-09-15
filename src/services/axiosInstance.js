@@ -1,23 +1,23 @@
-import axios from "axios";
+import axios from 'axios';
 
-const apiUrlBase = "http://www.omdbapi.com";
+const apiUrlBase = 'http://www.omdbapi.com';
 
-const apiKey = "faf7e5bb&s";
+const apiKey = 'faf7e5bb&s';
 
 const apiUrl = `${apiUrlBase}/?apikey=${apiKey}`;
 
-const errorResponseHandler = (error) => {
+const errorResponseHandler = error => {
   return Promise.reject(error);
 };
 
 const getInstance = () => {
   const instance = axios.create({
     baseURL: apiUrl,
-    timeout: 10000,
+    timeout: 10000
   });
 
   instance.interceptors.response.use(
-    (response) => response,
+    response => response,
     errorResponseHandler
   );
   return instance;
@@ -25,10 +25,10 @@ const getInstance = () => {
 
 const routes = {
   movieList: (title, page) => `&s=${title}&page=${page}`,
-  movieDetail: (id) => `&i=${id}`,
+  movieDetail: id => `&i=${id}`
 };
 
 export default {
   getInstance,
-  routes,
+  routes
 };
