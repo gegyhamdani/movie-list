@@ -3,7 +3,14 @@ import PropTypes from 'prop-types';
 import styles from './index.module.css';
 import Button from '../Button';
 
-const Card = ({ imgSrc, title, year, onOpenModalImage }) => {
+const Card = ({
+  imgSrc,
+  title,
+  year,
+  id,
+  onOpenModalImage,
+  onOpenMovieDetail
+}) => {
   return (
     <div className={`${styles['card-item']}`}>
       <div className={styles.card}>
@@ -17,7 +24,11 @@ const Card = ({ imgSrc, title, year, onOpenModalImage }) => {
         </div>
         <h5 className={styles.title}>{title}</h5>
         <p>{year}</p>
-        <Button label="detail-movie" className={`${styles['card-button']}`}>
+        <Button
+          label="detail-movie"
+          className={`${styles['card-button']}`}
+          onClick={() => onOpenMovieDetail(id)}
+        >
           Detail
         </Button>
       </div>
@@ -29,14 +40,18 @@ Card.propTypes = {
   imgSrc: PropTypes.string,
   title: PropTypes.string,
   year: PropTypes.string,
-  onOpenModalImage: PropTypes.func
+  id: PropTypes.string,
+  onOpenModalImage: PropTypes.func,
+  onOpenMovieDetail: PropTypes.func
 };
 
 Card.defaultProps = {
   imgSrc: '',
   title: '',
   year: '',
-  onOpenModalImage: () => {}
+  id: '',
+  onOpenModalImage: () => {},
+  onOpenMovieDetail: () => {}
 };
 
 export default Card;

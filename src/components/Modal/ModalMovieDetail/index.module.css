@@ -5,7 +5,72 @@
   height: 100vh;
   top: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #141414;
   transition: all 0.4s ease;
   opacity: 0;
+}
+
+.movie-poster {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+}
+
+.movie-button {
+  height: 40px;
+}
+
+.movie-detail {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 0 50px;
+  color: #ffffff;
+  width: 1080px;
+}
+
+.detail {
+  margin-left: 40px;
+}
+
+.detail h3 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.plot {
+  font-size: 1.2rem;
+}
+
+.little-detail {
+  margin: 10px 0;
+  font-size: 0.9rem;
+  color: #98a0a6;
+}
+
+.detail ul {
+  margin: 20px 0;
+  list-style: none;
+}
+
+.detail li {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 15px;
+}
+
+.detail li span {
+  width: 150px;
+}
+
+.rate {
+  color: #ffe170;
+}
+
+.votes {
+  margin-left: 10px;
+  color: #98a0a6;
 }
