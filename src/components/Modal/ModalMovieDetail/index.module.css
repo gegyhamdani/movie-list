@@ -1,0 +1,11 @@
+.modal-movie-detail {
+  position: fixed;
+  z-index: 13;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  transition: all 0.4s ease;
+  opacity: 0;
+}
