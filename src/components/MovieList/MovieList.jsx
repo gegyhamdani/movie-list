@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './index.module.css';
 import Card from '../Card';
 
-const MovieList = ({ movieList }) => {
+const MovieList = ({ movieList, onOpenModalImage }) => {
   return (
     <div className={`${styles['movie-list']}`}>
       {movieList.map(item => {
@@ -13,6 +13,7 @@ const MovieList = ({ movieList }) => {
             title={item.Title}
             year={item.Year}
             imgSrc={item.Poster}
+            onOpenModalImage={onOpenModalImage}
           />
         );
       })}
@@ -21,11 +22,13 @@ const MovieList = ({ movieList }) => {
 };
 
 MovieList.propTypes = {
-  movieList: PropTypes.arrayOf(PropTypes.shape({}))
+  movieList: PropTypes.arrayOf(PropTypes.shape({})),
+  onOpenModalImage: PropTypes.func
 };
 
 MovieList.defaultProps = {
-  movieList: []
+  movieList: [],
+  onOpenModalImage: () => {}
 };
 
 export default MovieList;

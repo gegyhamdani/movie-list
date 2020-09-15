@@ -1,0 +1,28 @@
+.modal-movie-image {
+    position: fixed;
+    z-index: 11;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    transition: all 0.4s ease;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-movie-image__unstyleButton {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    outline: inherit;
+  }
+
+  .modal-movie-image img{
+    width: 100%; 
+    height: auto;
+  }

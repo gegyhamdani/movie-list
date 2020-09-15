@@ -5,7 +5,7 @@
   border-radius: 4px;
   color: #ffffff;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.4s ease;
   outline: none;
   background: none;
 }
