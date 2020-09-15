@@ -6,17 +6,32 @@
 }
 
 .card {
+  width: 100%;
   padding: 1.5rem 1rem;
 }
 
 .card-image {
   position: relative;
   width: 100%;
+  height: 0;
+  padding-top: 150%;
+  overflow: hidden;
+  background-color: #202124;
 }
 
-.image {
+.card-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   width: 100%;
   height: 100%;
+  transition: transform 0.5s ease;
+}
+
+.card-image:hover img {
+  transform: scale(1.1);
 }
 
 .title {

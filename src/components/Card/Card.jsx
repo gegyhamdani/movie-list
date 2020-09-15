@@ -7,7 +7,7 @@ const Card = ({ imgSrc, title, year }) => {
     <div className={`${styles['card-item']}`}>
       <div className={styles.card}>
         <div className={`${styles['card-image']}`}>
-          <img alt="poster" src={imgSrc} className={styles.image} />
+          <img alt="poster" src={imgSrc} />
         </div>
         <h5 className={styles.title}>{title}</h5>
         <p>{year}</p>
