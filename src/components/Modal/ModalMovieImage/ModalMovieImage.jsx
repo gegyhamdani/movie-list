@@ -26,14 +26,6 @@ const ModalMovieImage = ({ open, onClose, imgSrc }) => {
       >
         <img src={imgSrc} alt="poster" />
       </button>
-      {/* <div
-        className={styles.image}
-        onClick={e => onPreventBackgroundClick(e)}
-        role="button"
-        aria-hidden="true"
-      >
-        <img alt="poster" src={imgSrc} />
-      </div> */}
     </div>
   );
 };
