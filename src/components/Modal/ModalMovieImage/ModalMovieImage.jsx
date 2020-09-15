@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './index.module.css';
+import Button from '../../Button';
 
 const ModalMovieImage = ({ open, onClose, imgSrc }) => {
   const onPreventBackgroundClick = e => {
@@ -19,13 +20,12 @@ const ModalMovieImage = ({ open, onClose, imgSrc }) => {
       role="button"
       aria-hidden="true"
     >
-      <button
-        type="button"
+      <Button
         onClick={e => onPreventBackgroundClick(e)}
         className={`${styles['modal-movie-image__unstyleButton']}`}
       >
         <img src={imgSrc} alt="poster" />
-      </button>
+      </Button>
     </div>
   );
 };
