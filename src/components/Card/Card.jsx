@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './index.module.css';
+import Button from '../Button';
 
 const Card = ({ imgSrc, title, year }) => {
   return (
@@ -11,6 +12,9 @@ const Card = ({ imgSrc, title, year }) => {
         </div>
         <h5 className={styles.title}>{title}</h5>
         <p>{year}</p>
+        <Button label="detail-movie" className={`${styles['card-button']}`}>
+          Detail
+        </Button>
       </div>
     </div>
   );

@@ -1,0 +1,23 @@
+.button {
+  min-height: 20px;
+  min-width: 20px;
+  border: 2px solid #d9d9d9;
+  border-radius: 4px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s;
+  outline: none;
+  background: none;
+}
+
+.button:hover {
+  color: #ffe170;
+  border-color: #ffe170;
+}
+
+.button:active {
+  color: #ffe170;
+  border-color: #ffe170;
+  box-shadow: 0px 4px 0px 0px rgba(255, 225, 112, 1);
+  transform: translateY(4px);
+}
