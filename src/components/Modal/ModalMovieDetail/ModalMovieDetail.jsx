@@ -35,8 +35,10 @@ const ModalMovieDetail = ({ open, isLoading, onClose, movieData }) => {
         <Spinner />
       ) : (
         <div className={`${styles['movie-detail']}`}>
-          <div className={`${styles['movie-poster']}`}>
-            <img alt="poster" src={Poster} />
+          <div className={`${styles.movie}`}>
+            <div className={`${styles['movie-poster']}`}>
+              <img alt="poster" src={Poster} />
+            </div>
             <Button className={`${styles['movie-button']}`} onClick={onClose}>
               Close
             </Button>

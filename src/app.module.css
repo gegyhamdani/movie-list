@@ -16,8 +16,12 @@
   color: #ffffff;
 }
 
-.wrapper h1 {
+.wrapper > h1 {
   font-size: 3rem;
   color: #ffffff;
   margin: 20px 0;
+}
+
+.no-movie {
+  font-style: italic;
 }

@@ -9,18 +9,10 @@
   justify-content: center;
   align-items: center;
   background: #141414;
-  transition: all 0.4s ease;
+  transition: opacity 0.4s ease, z-index 0.4s ease;
   opacity: 0;
-}
-
-.movie-poster {
-  width: 30%;
-  display: flex;
-  flex-direction: column;
-}
-
-.movie-button {
-  height: 40px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .movie-detail {
@@ -32,13 +24,48 @@
   width: 1080px;
 }
 
+.movie {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+}
+
+.movie-poster {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-top: 150%;
+  overflow: hidden;
+  background-color: #202124;
+}
+
+.movie-poster img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s ease;
+}
+
+.movie-poster:hover img {
+  transform: scale(1.1);
+}
+
+.movie-button {
+  height: 40px;
+  margin-top: 10px;
+}
+
 .detail {
-  margin-left: 40px;
+  margin-left: 3.5rem;
 }
 
 .detail h3 {
   font-size: 2rem;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .plot {
@@ -64,6 +91,7 @@
 
 .detail li span {
   width: 150px;
+  flex-shrink: 0;
 }
 
 .rate {
@@ -73,4 +101,38 @@
 .votes {
   margin-left: 10px;
   color: #98a0a6;
+}
+
+@media only screen and (max-width: 960px) {
+  .movie-detail {
+    flex-direction: column;
+    align-items: center;
+  }
+  .movie {
+    margin-top: 70px;
+    margin-bottom: 30px;
+    width: 30%;
+  }
+  .detail {
+    margin-left: 0;
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .movie {
+    margin-top: 100px;
+    margin-bottom: 30px;
+    width: 40%;
+  }
+  .detail li span {
+    width: 120px;
+  }
+}
+
+@media only screen and (max-width: 520px) {
+  .movie {
+    margin-top: 190px;
+    margin-bottom: 30px;
+    width: 50%;
+  }
 }

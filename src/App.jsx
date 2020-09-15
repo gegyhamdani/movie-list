@@ -26,7 +26,11 @@ const App = () => {
       setMovieListLoading(true);
       movieApi
         .getMovieList(movieTitle, page)
-        .then(res => setMovieList(res.data.Search))
+        .then(res => {
+          if (res.data.Response === 'True') {
+            setMovieList(res.data.Search);
+          }
+        })
         .finally(() => setMovieListLoading(false));
     }
   };
@@ -88,8 +92,15 @@ const App = () => {
       />
       <section className={styles.wrapper}>
         <h1>Movie Database</h1>
-        <Search onChange={handleChangeMovie} onKeyPress={handleSearchMovie} />
+        <Search
+          onChange={handleChangeMovie}
+          onKeyPress={handleSearchMovie}
+          placeholder="Search for movie by Title"
+        />
         {isMovieListLoading && <Spinner />}
+        {movieList.length === 0 && !isMovieListLoading && (
+          <p className={`${styles['no-movie']}`}>No movies are shown</p>
+        )}
         <MovieList
           movieList={movieList}
           onOpenModalImage={handleOpenModalImage}
