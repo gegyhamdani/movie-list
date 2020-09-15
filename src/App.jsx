@@ -6,6 +6,7 @@ import MovieList from './components/MovieList';
 import movieApi from './services/movieApi';
 import ModalMovieImage from './components/Modal/ModalMovieImage';
 import ModalMovieDetail from './components/Modal/ModalMovieDetail';
+import Spinner from './components/Spinner';
 
 const App = () => {
   const [movieTitle, setMovieTitle] = useState('');
@@ -15,18 +16,27 @@ const App = () => {
   const [modalImageSrc, setModalImageSrc] = useState('');
   const [movieId, setMovieId] = useState('');
   const [movieDetail, setMovieDetail] = useState({});
+  const [isMovieListLoading, setMovieListLoading] = useState(false);
+  const [isMovieDetailloading, setMovieDetailLoading] = useState(false);
   const [page, setPage] = useState(1);
 
   const handleSearchMovie = e => {
     if (e.key === 'Enter') {
+      setMovieList([]);
+      setMovieListLoading(true);
       movieApi
         .getMovieList(movieTitle, page)
-        .then(res => setMovieList(res.data.Search));
+        .then(res => setMovieList(res.data.Search))
+        .finally(() => setMovieListLoading(false));
     }
   };
 
   const handleGetMovieDetail = () => {
-    movieApi.getMovieDetail(movieId).then(res => setMovieDetail(res.data));
+    setMovieDetailLoading(true);
+    movieApi
+      .getMovieDetail(movieId)
+      .then(res => setMovieDetail(res.data))
+      .finally(() => setMovieDetailLoading(false));
   };
 
   const handleChangeMovie = e => {
@@ -67,6 +77,7 @@ const App = () => {
     <div className={styles.container}>
       <ModalMovieDetail
         open={isOpenModalDetail}
+        isLoading={isMovieDetailloading}
         onClose={handleCloseModalDetail}
         movieData={movieDetail}
       />
@@ -78,6 +89,7 @@ const App = () => {
       <section className={styles.wrapper}>
         <h1>Movie Database</h1>
         <Search onChange={handleChangeMovie} onKeyPress={handleSearchMovie} />
+        {isMovieListLoading && <Spinner />}
         <MovieList
           movieList={movieList}
           onOpenModalImage={handleOpenModalImage}
