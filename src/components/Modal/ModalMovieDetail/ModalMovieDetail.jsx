@@ -28,7 +28,8 @@ const ModalMovieDetail = ({ open, isLoading, onClose, movieData }) => {
       style={{
         opacity: open ? 1 : 0,
         pointerEvents: open ? 'initial' : 'none',
-        zIndex: open ? 13 : -1
+        zIndex: open ? 13 : -1,
+        transform: open ? 'translateX(0)' : 'translateX(100%)'
       }}
     >
       {isLoading ? (
