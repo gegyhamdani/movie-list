@@ -17,7 +17,7 @@
 
 ### Installations
 
-- clone: `git clone https://github.com/gegyhamdani/task-list-manager.git`
+- clone: `git clone https://github.com/gegyhamdani/movie-list.git`
 - install depandencies: `npm install`
 
 ### How To Use
