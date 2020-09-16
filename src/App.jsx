@@ -51,7 +51,7 @@ const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
       .finally(() => onComplete());
   };
 
-  const fetchMoreListItems = () => {
+  const fetchMoreMovieList = () => {
     setTimeout(() => {
       if (movieList.length !== movie[movieSearchName].length) {
         setSliceList(false);
@@ -72,7 +72,7 @@ const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
     }, 1500);
   };
 
-  const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
+  const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreMovieList);
 
   const handleSearchMovie = e => {
     if (e.key === 'Enter') {
@@ -171,7 +171,7 @@ const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
           onOpenMovieDetail={handleOpenModalDetail}
         />
         {isFetching && (
-          <p className={`${styles.fetch}`}>Fetching more list items...</p>
+          <p className={`${styles.fetch}`}>Fetching more Movie list...</p>
         )}
       </section>
     </div>
