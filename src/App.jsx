@@ -155,7 +155,7 @@ const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
         imgSrc={modalImageSrc}
       />
       <section className={styles.wrapper}>
-        <h1>Movie Database</h1>
+        <h1>Movie List</h1>
         <Search
           onChange={handleChangeMovie}
           onKeyPress={handleSearchMovie}
