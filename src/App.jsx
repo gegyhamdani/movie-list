@@ -1,5 +1,4 @@
 /* eslint-disable no-use-before-define */
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -47,7 +46,7 @@ const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
   const fetchMoreListItems = () => {
     setPage(state => state + 1);
     setTimeout(() => {
-      fetchMovie(movieTitle, page + 1, () => setIsFetching(false));
+      fetchMovie(movieSearchName, page + 1, () => setIsFetching(false));
     }, 1500);
   };
 
