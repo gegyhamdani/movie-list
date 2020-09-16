@@ -1,16 +1,27 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import styles from './app.module.css';
+
 import Search from './components/Search';
 import MovieList from './components/MovieList';
-import movieApi from './services/movieApi';
 import ModalMovieImage from './components/Modal/ModalMovieImage';
 import ModalMovieDetail from './components/Modal/ModalMovieDetail';
 import Spinner from './components/Spinner';
 
-const App = () => {
+import movieApi from './services/movieApi';
+
+import useInfiniteScroll from './hooks/useInfiniteScroll';
+
+import {
+  setMovieList as setMovieListAction,
+  setMovieSearchName as setMovieSearchNameAction
+} from './redux/actions/movie';
+
+const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
   const [movieTitle, setMovieTitle] = useState('');
-  const [movieList, setMovieList] = useState([]);
   const [isOpenModalImage, setOpenModalImage] = useState(false);
   const [isOpenModalDetail, setOpenModalDetail] = useState(false);
   const [modalImageSrc, setModalImageSrc] = useState('');
@@ -20,6 +31,10 @@ const App = () => {
   const [isMovieDetailloading, setMovieDetailLoading] = useState(false);
   const [page, setPage] = useState(1);
 
+  const fetchMoreListItems = () => {};
+
+  const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
+
   const handleSearchMovie = e => {
     if (e.key === 'Enter') {
       setMovieList([]);
@@ -28,7 +43,8 @@ const App = () => {
         .getMovieList(movieTitle, page)
         .then(res => {
           if (res.data.Response === 'True') {
-            setMovieList(res.data.Search);
+            setMovieList(movieTitle, res.data.Search);
+            setMovieSearchName(movieTitle);
           }
         })
         .finally(() => setMovieListLoading(false));
@@ -98,11 +114,11 @@ const App = () => {
           placeholder="Search for movie by Title"
         />
         {isMovieListLoading && <Spinner />}
-        {movieList.length === 0 && !isMovieListLoading && (
+        {movie[movieSearchName] === undefined && !isMovieListLoading && (
           <p className={`${styles['no-movie']}`}>No movies are shown</p>
         )}
         <MovieList
-          movieList={movieList}
+          movieList={movie[movieSearchName]}
           onOpenModalImage={handleOpenModalImage}
           onOpenMovieDetail={handleOpenModalDetail}
         />
@@ -111,4 +127,33 @@ const App = () => {
   );
 };
 
-export default App;
+App.propTypes = {
+  movie: PropTypes.shape({}),
+  movieSearchName: PropTypes.string,
+  setMovieList: PropTypes.func,
+  setMovieSearchName: PropTypes.func
+};
+
+App.defaultProps = {
+  movie: {},
+  movieSearchName: '',
+  setMovieList: () => {},
+  setMovieSearchName: () => {}
+};
+
+const mapStateToProps = state => {
+  const { movie } = state;
+  const { movieSearchName } = movie;
+  return { movie, movieSearchName };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setMovieList: (movieName, movieData) =>
+      dispatch(setMovieListAction(movieName, movieData)),
+    setMovieSearchName: movieName =>
+      dispatch(setMovieSearchNameAction(movieName))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
