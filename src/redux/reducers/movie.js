@@ -7,10 +7,10 @@ const movie = (state = initialState, action) => {
   const { type, movieSearchName, movieList } = action;
 
   const setMovieList = () => {
-    const clone = { ...state };
-    clone[movieSearchName] = movieList;
-
-    return clone;
+    return {
+      ...state,
+      ...movieList
+    };
   };
 
   const setMovieSearchName = () => {

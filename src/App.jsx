@@ -33,21 +33,22 @@ const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
   const [isMovieDetailloading, setMovieDetailLoading] = useState(false);
   const [page, setPage] = useState(1);
 
+  const fetchMovie = (title, pagination, callback = () => {}) => {
+    movieApi
+      .getMovieList(title, pagination)
+      .then(res => {
+        if (res.data.Response === 'True') {
+          setMovieList(movieRL.addMovieList(title, res.data.Search));
+        }
+      })
+      .finally(() => callback());
+  };
+
   const fetchMoreListItems = () => {
     setPage(state => state + 1);
     setTimeout(() => {
-      movieApi
-        .getMovieList(movieTitle, page + 1)
-        .then(res => {
-          if (res.data.Response === 'True') {
-            setMovieList(
-              movieTitle,
-              movieRL.addMovieList(movieSearchName, res.data.Search)
-            );
-          }
-        })
-        .finally(() => setIsFetching(false));
-    }, 2000);
+      fetchMovie(movieTitle, page + 1, () => setIsFetching(false));
+    }, 1500);
   };
 
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
@@ -56,15 +57,8 @@ const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
     if (e.key === 'Enter') {
       setPage(1);
       setMovieListLoading(true);
-      movieApi
-        .getMovieList(movieTitle, 1)
-        .then(res => {
-          if (res.data.Response === 'True') {
-            setMovieList(movieTitle, res.data.Search);
-            setMovieSearchName(movieTitle);
-          }
-        })
-        .finally(() => setMovieListLoading(false));
+      fetchMovie(movieTitle, 1, () => setMovieListLoading(false));
+      setMovieSearchName(movieTitle);
     }
   };
 
