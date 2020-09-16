@@ -32,7 +32,7 @@ const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
   const [isMovieDetailloading, setMovieDetailLoading] = useState(false);
   const [page, setPage] = useState(1);
 
-  const fetchMovie = (title, pagination, callback = () => {}) => {
+  const fetchMovieList = (title, pagination, callback = () => {}) => {
     movieApi
       .getMovieList(title, pagination)
       .then(res => {
@@ -46,7 +46,7 @@ const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
   const fetchMoreListItems = () => {
     setPage(state => state + 1);
     setTimeout(() => {
-      fetchMovie(movieSearchName, page + 1, () => setIsFetching(false));
+      fetchMovieList(movieSearchName, page + 1, () => setIsFetching(false));
     }, 1500);
   };
 
@@ -56,7 +56,7 @@ const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
     if (e.key === 'Enter') {
       setPage(1);
       setMovieListLoading(true);
-      fetchMovie(movieTitle, 1, () => setMovieListLoading(false));
+      fetchMovieList(movieTitle, 1, () => setMovieListLoading(false));
       setMovieSearchName(movieTitle);
     }
   };
