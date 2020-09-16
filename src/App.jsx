@@ -22,6 +22,7 @@ import {
 import movieRL from './redux/logic/movieRL';
 
 const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
+  const [movieList, setMovieListState] = useState([]);
   const [movieTitle, setMovieTitle] = useState('');
   const [isOpenModalImage, setOpenModalImage] = useState(false);
   const [isOpenModalDetail, setOpenModalDetail] = useState(false);
@@ -30,9 +31,15 @@ const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
   const [movieDetail, setMovieDetail] = useState({});
   const [isMovieListLoading, setMovieListLoading] = useState(false);
   const [isMovieDetailloading, setMovieDetailLoading] = useState(false);
+  const [isSliceList, setSliceList] = useState(false);
   const [page, setPage] = useState(1);
 
-  const fetchMovieList = (title, pagination, callback = () => {}) => {
+  const fetchMovieList = (
+    title,
+    pagination,
+    onFinish = () => {},
+    onComplete = () => {}
+  ) => {
     movieApi
       .getMovieList(title, pagination)
       .then(res => {
@@ -40,13 +47,28 @@ const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
           setMovieList(movieRL.addMovieList(title, res.data.Search));
         }
       })
-      .finally(() => callback());
+      .then(() => onFinish())
+      .finally(() => onComplete());
   };
 
   const fetchMoreListItems = () => {
-    setPage(state => state + 1);
     setTimeout(() => {
-      fetchMovieList(movieSearchName, page + 1, () => setIsFetching(false));
+      if (movieList.length !== movie[movieSearchName].length) {
+        setSliceList(false);
+        const remainsLocalMovie = movie[movieSearchName].slice(
+          movie[movieSearchName].length - 5
+        );
+        setMovieListState(prevState => [...prevState, ...remainsLocalMovie]);
+        setIsFetching(false);
+      } else {
+        setPage(state => state + 1);
+        fetchMovieList(
+          movieSearchName,
+          page + 1,
+          () => setSliceList(true),
+          () => setIsFetching(false)
+        );
+      }
     }, 1500);
   };
 
@@ -56,8 +78,13 @@ const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
     if (e.key === 'Enter') {
       setPage(1);
       setMovieListLoading(true);
-      fetchMovieList(movieTitle, 1, () => setMovieListLoading(false));
       setMovieSearchName(movieTitle);
+      fetchMovieList(
+        movieTitle,
+        1,
+        () => setSliceList(true),
+        () => setMovieListLoading(false)
+      );
     }
   };
 
@@ -103,6 +130,17 @@ const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
     if (movieId) handleGetMovieDetail();
   }, [movieId]);
 
+  useEffect(() => {
+    if (isSliceList) {
+      const selectedMovie = movie[movieSearchName].slice(
+        0,
+        movie[movieSearchName].length - 5
+      );
+      setMovieListState(selectedMovie);
+      setSliceList(false);
+    }
+  }, [isSliceList]);
+
   return (
     <div className={styles.container}>
       <ModalMovieDetail
@@ -124,11 +162,11 @@ const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
           placeholder="Search for movie by Title"
         />
         {isMovieListLoading && <Spinner />}
-        {movie[movieSearchName] === undefined && !isMovieListLoading && (
+        {movieList.length === 0 && !isMovieListLoading && (
           <p className={`${styles['no-movie']}`}>No movies are shown</p>
         )}
         <MovieList
-          movieList={movie[movieSearchName]}
+          movieList={movieList}
           onOpenModalImage={handleOpenModalImage}
           onOpenMovieDetail={handleOpenModalDetail}
         />
