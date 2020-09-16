@@ -25,3 +25,8 @@
 .no-movie {
   font-style: italic;
 }
+
+.fetch {
+  font-style: italic;
+  margin-bottom: 30px;
+}

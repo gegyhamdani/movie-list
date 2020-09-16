@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
@@ -19,6 +20,7 @@ import {
   setMovieList as setMovieListAction,
   setMovieSearchName as setMovieSearchNameAction
 } from './redux/actions/movie';
+import movieRL from './redux/logic/movieRL';
 
 const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
   const [movieTitle, setMovieTitle] = useState('');
@@ -31,16 +33,31 @@ const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
   const [isMovieDetailloading, setMovieDetailLoading] = useState(false);
   const [page, setPage] = useState(1);
 
-  const fetchMoreListItems = () => {};
+  const fetchMoreListItems = () => {
+    setPage(state => state + 1);
+    setTimeout(() => {
+      movieApi
+        .getMovieList(movieTitle, page + 1)
+        .then(res => {
+          if (res.data.Response === 'True') {
+            setMovieList(
+              movieTitle,
+              movieRL.addMovieList(movieSearchName, res.data.Search)
+            );
+          }
+        })
+        .finally(() => setIsFetching(false));
+    }, 2000);
+  };
 
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
 
   const handleSearchMovie = e => {
     if (e.key === 'Enter') {
-      setMovieList([]);
+      setPage(1);
       setMovieListLoading(true);
       movieApi
-        .getMovieList(movieTitle, page)
+        .getMovieList(movieTitle, 1)
         .then(res => {
           if (res.data.Response === 'True') {
             setMovieList(movieTitle, res.data.Search);
@@ -122,6 +139,9 @@ const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
           onOpenModalImage={handleOpenModalImage}
           onOpenMovieDetail={handleOpenModalDetail}
         />
+        {isFetching && (
+          <p className={`${styles.fetch}`}>Fetching more list items...</p>
+        )}
       </section>
     </div>
   );
