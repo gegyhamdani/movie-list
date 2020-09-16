@@ -4,7 +4,7 @@
 ### Build with
 
 <a href="https://reactjs.org/" rel="ReactJS">
-  <img src="docs/reactjs.png" alt="reactJS" width="200"/>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png" alt="reactJS" width="200"/>
 </a>
 
 
