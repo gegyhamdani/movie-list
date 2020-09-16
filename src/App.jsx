@@ -37,6 +37,7 @@ const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
   const fetchMovieList = (
     title,
     pagination,
+    isPrefetch,
     onFinish = () => {},
     onComplete = () => {}
   ) => {
@@ -44,7 +45,9 @@ const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
       .getMovieList(title, pagination)
       .then(res => {
         if (res.data.Response === 'True') {
-          setMovieList(movieRL.addMovieList(title, res.data.Search));
+          setMovieList(
+            movieRL.addMovieList(title, res.data.Search, isPrefetch)
+          );
         }
       })
       .then(() => onFinish())
@@ -65,6 +68,7 @@ const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
         fetchMovieList(
           movieSearchName,
           page + 1,
+          false,
           () => setSliceList(true),
           () => setIsFetching(false)
         );
@@ -82,6 +86,7 @@ const App = ({ movie, movieSearchName, setMovieList, setMovieSearchName }) => {
       fetchMovieList(
         movieTitle,
         1,
+        true,
         () => setSliceList(true),
         () => setMovieListLoading(false)
       );

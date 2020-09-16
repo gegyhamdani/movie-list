@@ -1,13 +1,12 @@
-import _ from 'lodash';
 import store from '../store';
 
-const addMovieList = (id, data) => {
+const addMovieList = (id, data, isPrefetch = false) => {
   const { getState } = store;
   const { movie } = getState();
 
   const clone = { ...movie };
   const obj = {};
-  if (_.isEmpty(clone[id])) {
+  if (isPrefetch) {
     obj[id] = data;
 
     return obj;
